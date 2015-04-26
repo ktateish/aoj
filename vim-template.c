@@ -2,6 +2,7 @@
 #define dpri(x) dbg(#x ": %d\n", x)
 #define dprs(x) dbg(#x ": %s\n", x)
 #include <stdio.h>
+typedef long long ll;
 const int INF = 1e9+7;
 
 int main(int argc, char **argv)
