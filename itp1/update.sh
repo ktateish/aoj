@@ -4,6 +4,7 @@ files=$(ls -1 *.c | sed -e 's/\.c//g')
 
 exec > Makefile.am
 
+echo "CFLAGS += -Wall"
 echo bin_PROGRAMS = $files
 
 echo .gitignore > .gitignore
