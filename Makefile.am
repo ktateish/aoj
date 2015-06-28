@@ -1,1 +1,1 @@
-SUBDIRS= itp1
+SUBDIRS= tools itp1

@@ -9,6 +9,7 @@ AM_INIT_AUTOMAKE([foreign])
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
 
 # Checks for libraries.
 
@@ -19,5 +20,6 @@ AC_PROG_CC
 # Checks for library functions.
 
 AC_CONFIG_FILES([Makefile
+                 tools/Makefile
                  itp1/Makefile])
 AC_OUTPUT
