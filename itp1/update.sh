@@ -37,8 +37,8 @@ cat <<'EOM'
 %.done: %.casesfetchdone %
 	@../tools/dotest.sh $<
 
-clean:
-	rm -f $(bin_PROGRAMS) *.o *.output *.input *.myout *.tset \
+aojclean:
+	rm -f *.output *.input *.myout *.tset \
 		*.tmp *.casesfetchdone *.done
 
 aojcheck: $(patsubst %,%.done,$(bin_PROGRAMS))
