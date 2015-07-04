@@ -15,4 +15,5 @@ if [ ! -f "$ofile" ]; then
 	echo "Fetching test cases info. for ${pid}"
 	curl -fs "${baseurl}${pid}" > "${ofile}.tmp" \
 		&& mv -f "${ofile}.tmp" "${ofile}"
+	sleep 1
 fi

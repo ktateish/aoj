@@ -48,10 +48,12 @@ do
 	if [ ! -f "${prefix}.input" ]; then
 		curl -fs "${caseurl}&type=in" > "${prefix}.input.tmp" \
 			&& mv -f "${prefix}.input.tmp" "${prefix}.input"
+		sleep 1
 	fi
 	if [ ! -f "${prefix}.output" ]; then
 		curl -fs "${caseurl}&type=out" > "${prefix}.output.tmp" \
 			&& mv -f "${prefix}.output.tmp" "${prefix}.output"
+		sleep 1
 	fi
 	if [ ! -f "${basefile}.case${i}.input" -o ! -f "${basefile}.case${i}.output" ]; then
 		echo "Cannot get files for case $i" >&2
