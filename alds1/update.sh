@@ -16,6 +16,7 @@ echo '*.input' >> .gitignore
 echo '*.tset' >> .gitignore
 echo '*.casesfetchdone' >> .gitignore
 echo '*.done' >> .gitignore
+echo '*.tmp' >> .gitignore
 for i in $files
 do
 	echo ${i}_SOURCES = ${i}.c
@@ -38,7 +39,7 @@ cat <<'EOM'
 
 clean:
 	rm -f $(bin_PROGRAMS) *.o *.output *.input *.myout *.tset \
-		*.casesfetchdone *.done
+		*.tmp *.casesfetchdone *.done
 
 aojcheck: $(patsubst %,%.done,$(bin_PROGRAMS))
 

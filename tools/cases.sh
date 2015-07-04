@@ -46,10 +46,12 @@ do
 	prefix="${basefile}.case${i}"
 	echo -n .
 	if [ ! -f "${prefix}.input" ]; then
-		curl -s "${caseurl}&type=in" > "${prefix}.input"
+		curl -fs "${caseurl}&type=in" > "${prefix}.input.tmp" \
+			&& mv -f "${prefix}.input.tmp" "${prefix}.input"
 	fi
 	if [ ! -f "${prefix}.output" ]; then
-		curl -s "${caseurl}&type=out" > "${prefix}.output"
+		curl -fs "${caseurl}&type=out" > "${prefix}.output.tmp" \
+			&& mv -f "${prefix}.output.tmp" "${prefix}.output"
 	fi
 	if [ ! -f "${basefile}.case${i}.input" -o ! -f "${basefile}.case${i}.output" ]; then
 		echo "Cannot get files for case $i" >&2

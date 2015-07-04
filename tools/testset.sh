@@ -13,5 +13,6 @@ ofile="$(basename $1 .c).tset"
 
 if [ ! -f "$ofile" ]; then
 	echo "Fetching test cases info. for ${pid}"
-	curl -s "${baseurl}${pid}" > "$ofile"
+	curl -fs "${baseurl}${pid}" > "${ofile}.tmp" \
+		&& mv -f "${ofile}.tmp" "${ofile}"
 fi
