@@ -51,13 +51,13 @@ do
 	i=$((i+1))
 done
 if $has_error; then
-	echo " ${col_ng}NG${col_de}"
+	echo -e " ${col_ng}NG${col_de}"
 	echo "Following cases got fault."
 	for e in "$errors"
 	do
 		echo $e
 	done
 else
-	echo " ${col_ok}OK${col_de}"
+	echo -e " ${col_ok}OK${col_de}"
 	echo ok > ${prog}.done
 fi
