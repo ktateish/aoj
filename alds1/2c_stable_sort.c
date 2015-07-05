@@ -49,13 +49,9 @@ void selection_sort() {
 }
 
 int is_stable() {
-	int i, prev;
-	prev = seq[0];
+	int i;
 	for (i = 1; i < N; i++) {
-		if (rank[i] > rank[i-1]) {
-			prev = seq[i];
-			continue;
-		}
+		if (rank[i] > rank[i-1]) continue;
 		if (seq[i] < seq[i-1]) return 0;
 	}
 	return 1;
