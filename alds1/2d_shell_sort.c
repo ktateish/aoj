@@ -26,20 +26,17 @@ void insertion_sort(int g) {
 }
 
 void shell_sort() {
-	int i, j;
+	int i, j, tmp;
 
 	cnt = 0;
-	for (i = 0, j = n/2; i < 127 && j > 0; i++, j /= 2) {
+	for (i = 0, j = 1; i < 128 && j <= n; i++, j = 3 * j + 1) {
 		G[i] = j;
 	}
-	if (i == 0) {
-		G[i] = 1;
-		m = 1;
-	} else {
-		if (G[i-1] == 2) {
-			G[i++] = 1;
-		}
-		m = i;
+	m = i;
+	for (i = 0, j = m - 1; i < j; i++, j--) {
+		tmp = G[i];
+		G[i] = G[j];
+		G[j] = tmp;
 	}
 	for (i = 0; i < m; i++) {
 		insertion_sort(G[i]);
