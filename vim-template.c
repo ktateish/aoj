@@ -4,6 +4,9 @@
 #include <stdio.h>
 typedef long long ll;
 const int MYINF = 1e9+7;
+typedef int bool;
+const bool true = 1;
+const bool false = 0;
 
 int main(int argc, char **argv)
 {
