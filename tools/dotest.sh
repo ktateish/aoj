@@ -1,5 +1,18 @@
 #!/bin/sh
 
+while :
+do
+	case "$1" in
+		-ruby)
+			prog_suffix=".rb"
+			;;
+		*)
+			break
+			;;
+	esac
+	shift
+done
+
 if [ -z "$1" ]; then
 	echo "Usage: $0 <problem name>.casesfetchdone" >&2
 	exit 1
@@ -18,7 +31,7 @@ col_ok='\033[1;32m'
 col_de='\033[0m'
 has_error=false
 errors=""
-echo -n "Checking cases for ${prog} "
+echo -n "Checking cases for ${prog}${prog_suffix} "
 
 i=1
 while [ $i -le $n ]
@@ -31,7 +44,7 @@ do
     diffcmd="$(dirname $0)/difftool"
 	fi
 
-	./"$prog" < "$in" > "$myout"
+	./"${prog}${prog_suffix}" < "$in" > "$myout"
 	if [ $? -ne 0 -o ! -f "${myout}" ]; then
 		echo -n "R"
 		has_error=true
@@ -59,5 +72,5 @@ if $has_error; then
 	done
 else
 	echo -e " ${col_ok}OK${col_de}"
-	echo ok > ${prog}.done
+	echo ok > ${prog}${prog_suffix}.done
 fi
