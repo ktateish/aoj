@@ -1,12 +1,17 @@
 #!/bin/sh
 
 files=$(ls -1 *.c | sed -e 's/\.c//g')
+rbfiles=$(ls -1 *.rb  2>/dev/null)
 
 exec > Makefile.am
 
 echo "CFLAGS += -Wall"
 echo "LIBS += -lm"
 echo bin_PROGRAMS = $files
+if [ -n "$rbfiles" ]; then
+	echo dist_bin_SCRIPTS = $rbfiles
+	chmod +x $rbfiles
+fi
 
 echo .gitignore > .gitignore
 echo Makefile.am >> .gitignore
@@ -37,10 +42,13 @@ cat <<'EOM'
 %.done: %.casesfetchdone %
 	@../tools/dotest.sh $<
 
+%.rb.done: %.casesfetchdone %.rb
+	@../tools/dotest.sh -ruby $<
+
 aojclean:
 	rm -f *.output *.input *.myout *.tset \
 		*.tmp *.casesfetchdone *.done
 
-aojcheck: $(patsubst %,%.done,$(bin_PROGRAMS))
+aojcheck: $(patsubst %,%.done,$(bin_PROGRAMS)) $(patsubst %,%.done,$(dist_bin_SCRIPTS))
 
 EOM
