@@ -10,21 +10,19 @@ typedef int bool;
 const bool true = 1;
 const bool false = 0;
 
-complex ARG60 = cos(M_PI/3)+sin(M_PI/3)*I;
-
-void pprint(complex c) {
+void pprint(complex double c) {
 	printf("%lf %lf\n", creal(c), cimag(c));
 }
 
-void koch_curve_r(int n, complex p, complex q) {
+void koch_curve_r(int n, complex double p, complex double q) {
 	if (n == 0) {
 		pprint(p);
 		return;
 	}
-	complex pq = q - p;
-	complex s = (pq/3);
-	complex t = 2 * s;
-	complex u = s * ARG60;
+	complex double pq = q - p;
+	complex double s = (pq/3);
+	complex double t = 2 * s;
+	complex double u = s * (cos(M_PI/3)+sin(M_PI/3)*I);
 	koch_curve_r(n - 1, p, p+s);
 	koch_curve_r(n - 1, p+s, p+s+u);
 	koch_curve_r(n - 1, p+s+u, p+t);
@@ -32,8 +30,8 @@ void koch_curve_r(int n, complex p, complex q) {
 }
 
 void koch_curve(int n) {
-	complex s = 0+0*I;
-	complex e = 100+0*I;
+	complex double s = 0+0*I;
+	complex double e = 100+0*I;
 	koch_curve_r(n, s, e);
 	pprint(e);
 }
