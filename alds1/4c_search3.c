@@ -30,7 +30,7 @@ int getidx(char c) {
 }
 
 typedef struct node_st {
-	struct node_st *next[sizeof(next_e)];
+	struct node_st *next[NEXT_NUL+1];
 } node_t;
 
 void *xmalloc(size_t s) {
@@ -101,4 +101,3 @@ int main(int argc, char **argv)
 		
 	return 0;
 }
-
