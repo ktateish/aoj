@@ -1,76 +1,37 @@
 #!/bin/sh
 
-while :
-do
-	case "$1" in
-		-ruby)
-			prog_suffix=".rb"
-			;;
-		*)
-			break
-			;;
-	esac
-	shift
-done
-
-if [ -z "$1" ]; then
-	echo "Usage: $0 <problem name>.casesfetchdone" >&2
-	exit 1
-fi
-
-if [ ! -f "$1" ]; then
-	echo "$0: not found: $1" >&2
-	exit 1
-fi
-
-prog=$(basename $1 .casesfetchdone)
-n=$(cat $1)
-
 col_ng='\033[1;31m'
 col_ok='\033[1;32m'
-col_de='\033[0m'
-has_error=false
-errors=""
-echo -n "Checking cases for ${prog}${prog_suffix} "
+col_off='\033[0m'
 
-i=1
-while [ $i -le $n ]
+c="$1"
+e="$2"
+p1=$(basename "$e" | sed -Ee 's/^([0-9]+).*/\1/')
+p2=$(basename "$e" | sed -Ee 's/^([0-9]+)([^_]+)_.*/\2/' | tr 'a-z' 'A-Z')
+p="${p1}_$p2"
+i=0
+n=$(aoj testcase -l ${c}_$p)
+rc=0
+printf "Checking %s for %s_%s\n" $e $c $p
+while [ $i -lt $n ]
 do
-	in="${prog}.case${i}.input"
-	out="${prog}.case${i}.output"
-	myout="${prog}.case${i}.myout"
-	diffcmd="diff -q"
-	if [ -f "${prog}.fuzzy" ]; then
-    diffcmd="$(dirname $0)/difftool"
+	printf "  case %d: " $i
+	aoj check -c $i ${c}_$p $e
+	rc=$((rc + $?))
+	if [ $rc -ne 0 ]; then
+		aoj testcase -i $i ${c}_$p > $e.$i.input
+		aoj testcase -o $i ${c}_$p > $e.$i.expected
+		./$e < $e.$i.input > $e.$i.received
+		printf "${col_ng}NG${col_off}\n"
+		git diff --quiet --no-index $e.$i.expected $e.$i.received
+	else
+		printf "${col_ok}OK${col_off}\n"
+		rm -f $e.$i.input $e.$i.received $e.$i.expected
 	fi
-
-	./"${prog}${prog_suffix}" < "$in" > "$myout"
-	if [ $? -ne 0 -o ! -f "${myout}" ]; then
-		echo -n "R"
-		has_error=true
-		errors="$errors $in"
-		i=$((i+1))
-		continue
-	fi
-	${diffcmd} "$out" "$myout"
-	if [ $? -ne 0 ]; then
-		echo -n "W"
-		has_error=true
-		errors="$errors $in"
-		i=$((i+1))
-		continue
-	fi
-	echo -n "."
 	i=$((i+1))
 done
-if $has_error; then
-	echo -e " ${col_ng}NG${col_de}"
-	echo "Following cases got fault."
-	for e in "$errors"
-	do
-		echo $e
-	done
-else
-	echo -e " ${col_ok}OK${col_de}"
-	echo ok > ${prog}${prog_suffix}.done
+
+if [ $rc -eq 0 ]; then
+	touch .$e.done
 fi
+exit $rc
