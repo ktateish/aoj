@@ -11,15 +11,15 @@ int main(int argc, char **argv)
 {
 	ll n, m, l, i, j, k;
 	const char *sp;
-	scanf("%d %d %d", &n, &m, &l);
+	scanf("%lld %lld %lld", &n, &m, &l);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < m; j++) {
-			scanf("%d", &a[i][j]);
+			scanf("%lld", &a[i][j]);
 		}
 	}
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < l; j++) {
-			scanf("%d", &b[i][j]);
+			scanf("%lld", &b[i][j]);
 		}
 	}
 	for (i = 0; i < n; i++) {
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 	for (i = 0; i < n; i++) {
 		sp = "";
 		for (j = 0; j < l; j++) {
-			printf("%s%ld", sp, c[i][j]);
+			printf("%s%lld", sp, c[i][j]);
 			sp = " ";
 		}
 		putchar('\n');
