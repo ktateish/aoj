@@ -7,6 +7,10 @@ echo "SUBDIRS = c" > Makefile.am
 sh ./updatec.sh
 echo c >> .gitignore
 
+echo "SUBDIRS += go" >> Makefile.am
+sh ./updatego.sh
+echo go >> .gitignore
+
 cat >> Makefile.am <<'EOM'
 
 aojcheck aojclean:

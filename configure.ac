@@ -26,5 +26,6 @@ AC_CONFIG_FILES([Makefile
                  itp1/ruby/Makefile
                  alds1/Makefile
                  alds1/c/Makefile
+                 alds1/go/Makefile
 		 ])
 AC_OUTPUT
