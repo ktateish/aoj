@@ -7,6 +7,10 @@ echo "SUBDIRS = c" > Makefile.am
 sh ./updatec.sh
 echo c >> .gitignore
 
+echo "SUBDIRS = cc" > Makefile.am
+sh ./updatecc.sh
+echo cc >> .gitignore
+
 echo "SUBDIRS += go" >> Makefile.am
 sh ./updatego.sh
 echo go >> .gitignore
