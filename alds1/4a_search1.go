@@ -9,12 +9,15 @@ import (
 )
 
 func Lsearch(a []int, x int) int {
-	for _, i := range a {
-		if i == x {
-			return 1
-		}
+	b := append(a, x)
+	i := 0
+	for ; b[i] != x; i++ {
 	}
-	return 0
+	if i == len(a) {
+		return 0
+	} else {
+		return 1
+	}
 }
 
 func main() {
