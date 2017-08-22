@@ -69,7 +69,7 @@ func main() {
 		if arg == "+" {
 			y := pop()
 			x := pop()
-			s.Push(x + y)
+			push(x + y)
 		} else if arg == "-" {
 			y := pop()
 			x := pop()
