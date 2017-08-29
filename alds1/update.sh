@@ -7,7 +7,7 @@ echo "SUBDIRS = c" > Makefile.am
 sh ./updatec.sh
 echo c >> .gitignore
 
-echo "SUBDIRS = cc" > Makefile.am
+echo "SUBDIRS = cc" >> Makefile.am
 sh ./updatecc.sh
 echo cc >> .gitignore
 
