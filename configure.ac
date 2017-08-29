@@ -6,6 +6,7 @@ AC_INIT([ktateish-aoj], [0.0.1], [kt@wheel.jp])
 AC_CONFIG_SRCDIR([autogen.sh])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign])
+AM_EXTRA_RECURSIVE_TARGETS([aojcheck aojclean])
 
 # Checks for programs.
 AC_PROG_CC
