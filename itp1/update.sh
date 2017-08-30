@@ -10,3 +10,7 @@ echo c >> .gitignore
 echo "SUBDIRS += ruby" >> Makefile.am
 sh ./updateruby.sh
 echo ruby >> .gitignore
+
+echo "SUBDIRS += go" >> Makefile.am
+sh ./updatego.sh
+echo go >> .gitignore

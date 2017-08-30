@@ -24,6 +24,7 @@ AC_CONFIG_FILES([Makefile
                  tools/Makefile
                  itp1/Makefile
                  itp1/c/Makefile
+                 itp1/go/Makefile
                  itp1/ruby/Makefile
                  alds1/Makefile
                  alds1/c/Makefile
