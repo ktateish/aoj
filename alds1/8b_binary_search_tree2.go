@@ -3,8 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
-	"unicode"
+	"strconv"
 )
 
 type Node struct {
@@ -152,50 +153,46 @@ func main() {
 }
 
 var (
-	stdin  *bufio.Reader
-	stdout *bufio.Writer
+	readString func() string
+	stdout     *bufio.Writer
 )
 
 func init() {
-	stdin = bufio.NewReader(os.Stdin)
+	readString = newReadString(os.Stdin)
 	stdout = bufio.NewWriter(os.Stdout)
 }
 
-func scanf(f string, args ...interface{}) (int, error) {
-	n, err := fmt.Fscanf(stdin, f, args...)
-	for {
-		r, _, err := stdin.ReadRune()
-		if err != nil || !unicode.IsSpace(r) {
-			stdin.UnreadRune()
-			break
+func newReadString(ior io.Reader) func() string {
+	r := bufio.NewScanner(ior)
+	r.Split(bufio.ScanWords)
+
+	return func() string {
+		if !r.Scan() {
+			panic("Scan failed")
 		}
+		return r.Text()
 	}
-	return n, err
 }
 
 func readInt() int {
-	var n int
-	scanf("%d", &n)
-	return n
+	i, err := strconv.Atoi(readString())
+	if err != nil {
+		panic(err.Error())
+	}
+	return i
 }
 
 func readIntSlice(n int) []int {
-	a := make([]int, n)
+	b := make([]int, n)
 	for i := 0; i < n; i++ {
-		scanf("%d", &a[i])
+		b[i] = readInt()
 	}
-	return a
+	return b
 }
 
 func readLengthAndSlice() []int {
 	n := readInt()
 	return readIntSlice(n)
-}
-
-func readString() string {
-	var s string
-	scanf("%s", &s)
-	return s
 }
 
 func printf(f string, args ...interface{}) (int, error) {

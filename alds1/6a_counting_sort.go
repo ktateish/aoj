@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"unicode"
+	"strconv"
 )
 
 func countingSort(a, b []int, k int) {
@@ -26,68 +26,70 @@ func countingSort(a, b []int, k int) {
 }
 
 func main() {
-	w := bufio.NewWriter(os.Stdout)
-	defer w.Flush()
+	defer stdout.Flush()
 
-	a, k := readLengthAndSlice()
+	a := readLengthAndSlice()
+	k := -1
+	for _, x := range a {
+		if x > k {
+			k = x
+		}
+	}
 	a = append([]int{0}, a...)
 	b := make([]int, len(a))
 	countingSort(a, b, k)
 	sp := ""
 	for i := 1; i < len(a); i++ {
-		fmt.Fprintf(w, "%s%d", sp, b[i])
+		printf("%s%d", sp, b[i])
 		sp = " "
 	}
-	fmt.Fprintln(w)
+	println()
 }
 
 var (
-	Stdin *FastScanner
+	readString func() string
+	stdout     *bufio.Writer
 )
 
-type FastScanner struct {
-	r *bufio.Reader
+func init() {
+	readString = newReadString(os.Stdin)
+	stdout = bufio.NewWriter(os.Stdout)
 }
 
-func NewFastScanner(r io.Reader) *FastScanner {
-	return &FastScanner{bufio.NewReader(r)}
-}
+func newReadString(ior io.Reader) func() string {
+	r := bufio.NewScanner(ior)
+	r.Split(bufio.ScanWords)
 
-func (fs *FastScanner) Scanf(f string, args ...interface{}) (int, error) {
-	n, err := fmt.Fscanf(fs.r, f, args...)
-	for {
-		r, _, err := fs.r.ReadRune()
-		if err != nil || !unicode.IsSpace(r) {
-			fs.r.UnreadRune()
-			break
+	return func() string {
+		if !r.Scan() {
+			panic("Scan failed")
 		}
+		return r.Text()
 	}
-	return n, err
 }
 
 func readInt() int {
-	var n int
-	Stdin.Scanf("%d", &n)
-	return n
+	i, _ := strconv.Atoi(readString())
+	return i
 }
 
-func readIntSlice(n int) ([]int, int) {
-	a := make([]int, n)
-	k := 0
+func readIntSlice(n int) []int {
+	b := make([]int, n)
 	for i := 0; i < n; i++ {
-		Stdin.Scanf("%d", &a[i])
-		if a[i] > k {
-			k = a[i]
-		}
+		b[i] = readInt()
 	}
-	return a, k
+	return b
 }
 
-func readLengthAndSlice() ([]int, int) {
+func readLengthAndSlice() []int {
 	n := readInt()
 	return readIntSlice(n)
 }
 
-func init() {
-	Stdin = NewFastScanner(os.Stdin)
+func printf(f string, args ...interface{}) (int, error) {
+	return fmt.Fprintf(stdout, f, args...)
+}
+
+func println(args ...interface{}) (int, error) {
+	return fmt.Fprintln(stdout, args...)
 }
