@@ -30,5 +30,7 @@ AC_CONFIG_FILES([Makefile
                  alds1/c/Makefile
                  alds1/cc/Makefile
                  alds1/go/Makefile
+                 dsl/Makefile
+                 dsl/go/Makefile
 		 ])
 AC_OUTPUT
